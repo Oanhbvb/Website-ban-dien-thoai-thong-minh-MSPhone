@@ -1,2 +1,2 @@
-package com.example.demo.Utils;public enum RepoUtuils {
+package com.example.demo.Utils;public class RepoUtuils {
 }
