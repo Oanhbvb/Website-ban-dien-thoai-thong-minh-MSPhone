@@ -9,18 +9,22 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "KhahHang")
+
+@Table(name = "KhachHang")
 public class KhachHang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer id;
 
+    @Column(name = "MaKhachHang")
+    private  String maKhachHang;
+
     @Column(name = "TenKhachHang")
     private  String tenKhachHang;
 
     @Column(name = "SDT")
-    private Integer sdt;
+    private String sdt;
 
     @Column(name = "Email")
     private String email;
@@ -28,9 +32,11 @@ public class KhachHang {
     @Column(name = "MatKhau")
     private String matKhau;
 
-    @Column(name = "IDDiaChi")
-    private Integer idDiaChi;
 
     @Column(name = "TrangThai")
     private Integer trangThai;
+
+    @Column(name = "AnhKhachHang")
+    private String anhKhachHang;
+
 }

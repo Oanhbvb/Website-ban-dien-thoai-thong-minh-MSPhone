@@ -1,9 +1,504 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"><head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{/layouts/main.html}">
+
+<meta charset="UTF-8">
+<title>Title</title>
+
 </head>
 <body>
-<h1>tets</h1>
+
+<article layout:fragment="content">
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <hr class="my-2"/>
+        <div class="card mb-4 px-4 p-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- INPUT SEARCH -->
+                <div>
+                    <nav class="navbar">
+                        <form class="form-inline d-flex align-items-center" action="/khach-hang/search" method="post">
+                            <input class="form-control mr-sm-2" name="search" type="search"
+                                   placeholder="Mã, tên, sdt, email,.."
+                                   aria-label="Search">
+                            <div class="form-check mx-3 mb-2">
+                                <input class="form-check-input" type="radio" name="status" value="1"
+                                       id="checkbox1">
+                                <label class="d-flex form-check-label" for="checkbox1">
+                                    Hoạt động
+                                </label>
+                            </div>
+
+
+                            <div class="form-check mx-3 mb-2">
+                                <input class="form-check-input" type="radio" name="status" value="0"
+                                       id="checkbox2">
+                                <label class="form-check-label" for="checkbox2">
+                                    Đã xoá
+                                </label>
+                            </div>
+
+
+                            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Tìm</button>
+
+                        </form>
+                    </nav>
+                </div>
+
+
+                <!-- ALERT -->
+                <div th:if="${success != null}" class="success slideInRight" id="successMessage">
+                    <div class="success__icon">
+                        <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd"
+                                  d="m12 1c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11zm4.768 9.14c.0878-.1004.1546-.21726.1966-.34383.0419-.12657.0581-.26026.0477-.39319-.0105-.13293-.0475-.26242-.1087-.38085-.0613-.11844-.1456-.22342-.2481-.30879-.1024-.08536-.2209-.14938-.3484-.18828s-.2616-.0519-.3942-.03823c-.1327.01366-.2612.05372-.3782.1178-.1169.06409-.2198.15091-.3027.25537l-4.3 5.159-2.225-2.226c-.1886-.1822-.4412-.283-.7034-.2807s-.51301.1075-.69842.2929-.29058.4362-.29285.6984c-.00228.2622.09851.5148.28067.7034l3 3c.0983.0982.2159.1748.3454.2251.1295.0502.2681.0729.4069.0665.1387-.0063.2747-.0414.3991-.1032.1244-.0617.2347-.1487.3236-.2554z"
+                                  fill="#393a37" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div class="success__title" th:text="${success}"></div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Bootstrap Table with Caption -->
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-end">
+
+                    <form action="/khach-hang/import" method="post" enctype="multipart/form-data" class="ms-3 ">
+                        <div class="input-group">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <input type="file" name="file" class="form-control flex-grow-1 me-2 form-control-sm"
+                                           accept=".xlsx, .xls">
+                                </div>
+                                <!-- Nút submit -->
+                                <div>
+                                    <button type="submit" class="btn btn-primary btn-sm" onclick="return confirmExcel()">Nhập Excel</button>
+
+                                    <div id="myModalConfirm" class="modal fade">
+                                        <div class="modal-dialog modal-confirm">
+                                            <div class="modal-content">
+                                                <div class="modal-header flex-column">
+                                                    <i class="bi bi-check-circle" style="color: #19702d; font-size: 50px;"></i>
+                                                    <h4 class="modal-title w-100">Xác nhận?</h4>
+                                                    <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Bạn có xác nhận nhập file excel?</p>
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                                                    <button type="submit" class="btn btn-success">Xác nhận</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        function confirmExcel() {
+                                            $('#myModalConfirm').modal('show');
+                                            return false;
+                                        }
+
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="col-1 mb-2 " style="margin-left: 50px">
+                        <button class="btn btn-secondary btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20"
+                                 fill="none" class="svg-icon">
+                                <g stroke-width="1.5" stroke-linecap="round" stroke="#FFFFFF">
+                                    <circle r="7.5" cy="10" cx="10"></circle>
+                                    <path d="m9.99998 7.5v5"></path>
+                                    <path d="m7.5 9.99998h5"></path>
+                                </g>
+                            </svg>
+                            <a style="color: white" class="lable " th:href="@{/khach-hang/view-add}"
+                               id="addLink">Thêm</a>
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-hover ">
+
+                        <caption class="ms-4">
+                        </caption>
+                        <thead class="table-light">
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã khách hàng</th>
+                            <th>Tên khách hàng</th>
+                            <th>Số điện thoại</th>
+                            <th style="text-align: center">Email</th>
+                            <th style="text-align: center">Địa chỉ</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="item,i : ${items}">
+                            <td th:text="${i.index + 1}"></td>
+                            <td th:text="${item.maKhachHang}"></td>
+                            <td th:text="${item.tenKhachHang}"></td>
+                            <td th:text="${item.sdt}"></td>
+                            <td th:text="${item.email}"></td>
+                            <td style="text-align: center">
+                                <p th:each="dc : ${listDC}"
+                                   th:if="${item.id eq dc.idKhachHang && dc.trangThai == 3}">
+                                    <span th:text="${dc.diaChiCuThe}"></span>
+                                    <br>
+                                    <span th:text="${dc.Phuong}"></span>,
+                                    <span th:text="${dc.quan}"></span>,
+                                    <span th:text="${dc.tinh}"></span>
+                                </p>
+                            </td>
+
+                            <td>
+                                        <span class="badge me-1"
+                                              th:class="${item.trangThai == 1 ? 'bg-label-success badge me-1' : 'badge me-1 bg-label-danger'}">
+                                            [[${item.trangThai == 1 ? 'Hoạt động' : 'Đã xoá'}]]
+                                        </span>
+                            </td>
+
+                            <td>
+
+                                <a th:href="@{'/khach-hang/edit/'+${item.id}}" th:if="${item.trangThai==1}"> <i
+                                        class="bx bx-edit-alt"></i></a>
+<!--                                <a th:href="@{'/khach-hang/delete/'+${item.id}}" th:if="${item.trangThai==1}" onclick="return confirm('xác nhận xoá?')">-->
+<!--                                    <i class="bx bx-trash"></i>-->
+<!--                                </a>-->
+                                <a  th:if="${item.trangThai==1}" href="#" th:attr="data-khachHangId=${item.id}" onclick="openModal(this.getAttribute('data-khachHangId'))">  <i class="bx bx-trash"></i></a>
+
+                                <a th:href="@{'/khach-hang/detail/'+${item.id}}" th:if="${item.TrangThai==1}"><i class="bx bxs-detail"></i></a>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="d-flex justify-content-center">
+                        <!-- Phân trang khi không có điều kiện search -->
+                        <div th:if="${items.totalPages > 0 && checkSearch == null}"
+                             class="d-flex justify-content-between">
+                            <nav aria-label="...">
+                                <ul class="pagination">
+                                    <li class="page-item"
+                                        th:class="${items.first} ? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link" th:href="@{/khach-hang/hien-thi(page=0)}"><<</a>
+                                    </li>
+                                    <li class="page-item "
+                                        th:class="${items.first} ? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link"
+                                           th:href="@{/khach-hang/hien-thi(page=${items.number - 1})}"><</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a class="page-link" th:text="${items.number + 1+'/'+items.totalPages}"></a>
+                                    </li>
+                                    <li class="page-item" th:class="${items.last} ? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link"
+                                           th:href="@{/khach-hang/hien-thi(page=${items.number + 1})}">></a>
+                                    </li>
+                                    <li class="page-item" th:class="${items.last} ? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link"
+                                           th:href="@{/khach-hang/hien-thi(page=${items.totalPages - 1})}"> >></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+
+                        <div th:if="${items.totalPages > 0 && checkSearch!= null}"
+                             class="d-flex justify-content-between">
+                            <nav aria-label="...">
+                                <ul class="pagination">
+                                    <li class="page-item"
+                                        th:class="${items.first} ? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link"
+                                           th:href="@{/khach-hang/search(page=0, search=${search}, status=${status})}"><<</a>
+                                    </li>
+                                    <li class="page-item "
+                                        th:class="${items.first} ? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link"
+                                           th:href="@{/khach-hang/search(page=${items.number - 1}, search=${search}, status=${status})}"><</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a class="page-link" th:text="${items.number + 1+'/'+items.totalPages}"></a>
+                                    </li>
+                                    <li class="page-item" th:class="${items.last} ? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link"
+                                           th:href="@{/khach-hang/search(page=${items.number + 1}, search=${search}, status=${status})}">
+                                            ></a>
+                                    </li>
+                                    <li class="page-item" th:class="${items.last} ? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link"
+                                           th:href="@{/khach-hang/search(page=${items.totalPages - 1}, search=${search}, status=${status})}">>></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal Delete -->
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header flex-column">
+                    <i class="bi bi-x-circle" style="color: #bf2121; font-size: 50px;"></i>
+                    <h4 class="modal-title w-100">Xác nhận xoá?</h4>
+                    <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn xác nhận xoá khách hàng vừa chọn?</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Trở lại</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Xoá</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(khachHangid) {
+            var deleteUrl = '/khach-hang/delete/' + khachHangid;
+            document.getElementById('confirmDeleteBtn').setAttribute('onclick', 'confirmDelete("' + deleteUrl + '")');
+            $('#myModal').modal('show');
+        }
+
+        function confirmDelete(deleteUrl) {
+            window.location.href = deleteUrl;
+        }
+    </script>
+
+
+
+
+
+
+    <script> var successMessage = document.getElementById('successMessage');
+    if (successMessage) {
+        successMessage.classList.add('slideInRight');
+        setTimeout(function () {
+            successMessage.classList.remove('slideInRight');
+            successMessage.classList.add('slideOutRight');
+            setTimeout(function () {
+                successMessage.style.display = 'none';
+            }, 1000);
+        }, 4000);
+    } </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('addLink').addEventListener('click', function () {
+                // Khi liên kết được nhấn, gọi localStorage.clear() để xoá dữ liệu trong Local Storage
+                localStorage.clear();
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+    <!-- Modal Confirm -->
+    <!-- Modal Confirm -->
+<!--    <div id="myModalConfirm" class="modal fade">-->
+<!--        <div class="modal-dialog modal-confirm">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header flex-column">-->
+<!--                    <i class="bi bi-check-circle" style="color: #19702d; font-size: 50px;"></i>-->
+<!--                    <h4 class="modal-title w-100">Are you sure?</h4>-->
+<!--                    <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <p>Do you really want to confirm these actions?</p>-->
+<!--                </div>-->
+<!--                <div class="modal-footer justify-content-center">-->
+<!--                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>-->
+<!--                    <button type="submit" class="btn btn-success">Confirm</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <script>-->
+<!--        function confirmExcel() {-->
+<!--            $('#myModalConfirm').modal('show');-->
+<!--            return false;-->
+<!--        }-->
+
+
+    </script>
+
+
+    <style>
+        .success {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            width: 320px;
+            padding: 12px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: start;
+            background: #EDFBD8;
+            border-radius: 8px;
+            box-shadow: 0px 0px 5px -3px #111;
+            position: fixed;
+            top: 90px;
+            right: 45px;
+        }
+
+        .slideInRight {
+            animation: slideInRight 1s forwards;
+        }
+
+        .slideOutRight {
+            animation: slideOutRight 1.5s forwards;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(150%);
+            }
+        }
+
+
+        .success__icon {
+            width: 20px;
+            height: 20px;
+            transform: translateY(-2px);
+            margin-right: 8px;
+        }
+
+        .success__icon path {
+            fill: #84D65A;
+        }
+
+        .success__title {
+            font-weight: 500;
+            font-size: 14px;
+            color: #2B641E;
+        }
+
+        .success__close {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .success__close path {
+            fill: #2B641E;
+        }
+
+    </style>
+    <style>
+        .modal-confirm {
+            color: #0e0d0d;
+            width: 400px;
+        }
+
+        .modal-confirm .modal-content {
+            padding: 20px;
+            border-radius: 5px;
+            border: none;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .modal-confirm .modal-header {
+            border-bottom: none;
+            position: relative;
+        }
+
+        .modal-confirm h4 {
+            text-align: center;
+            font-size: 26px;
+            margin: 30px 0 -10px;
+        }
+
+        .modal-confirm .btn-close {
+            position: absolute;
+            top: -5px;
+            right: -1px;
+        }
+
+        .modal-confirm .modal-body {
+            color: #999;
+        }
+
+        .modal-confirm .modal-footer {
+            border: none;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 13px;
+            padding: 10px 15px 25px;
+        }
+
+        .modal-confirm .modal-footer a {
+            color: #999;
+        }
+
+        .modal-confirm .btn,
+        .modal-confirm .btn:active {
+            color: #fff;
+            border-radius: 4px;
+            background: #219d53;
+            text-decoration: none;
+            transition: all 0.4s;
+            line-height: normal;
+            min-width: 120px;
+            border: none;
+            min-height: 40px;
+            border-radius: 3px;
+            margin: 0 5px;
+        }
+
+        .modal-confirm .btn-secondary {
+            background: #918f8f;
+        }
+
+        .modal-confirm .btn-danger {
+            background: #b72d2d;
+        }
+
+    </style>
+</article>
+
 </body>
 </html>
