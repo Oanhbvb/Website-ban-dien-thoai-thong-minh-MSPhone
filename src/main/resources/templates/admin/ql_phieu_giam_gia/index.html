@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+>
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="../assets/"
+      data-template="vertical-menu-template-free">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"></script>
+    <style>
+        .form-outline {
+            position: relative;
+        }
+
+        .form-outline label {
+            position: absolute;
+            top: -10px;
+            /* Điều chỉnh khoảng cách từ trên xuống */
+            left: 10px;
+            /* Điều chỉnh khoảng cách từ trái sang */
+            padding: 0 5px;
+            background-color: white;
+            color: gray;
+            font-size: 12px;
+        }
+        .chua-dien-ra {
+            color: yellowgreen;
+        }
+        .dang-dien-ra {
+            color: green;
+        }
+        .da-ket-thuc {
+            color: red;
+        }
+        /* CSS cho modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #radioInput:checked {
+            border-color: red;
+            background-color: red;
+        }
+    </style>
+
+    <title>Phiếu giảm giá</title>
+
+    <meta name="description" content="" />
+
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/img/favicon/favicon.ico}">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet"/>
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/boxicons.css}">
+    <!-- Core CSS -->
+    <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/css/core.css}" class="template-customizer-core-css">
+    <link rel="stylesheet" th:href="@{/assets/vendor/css/theme-default.css}" class="template-customizer-theme-css">
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css}">
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Helpers -->
+    <script type="text/javascript" th:src="@{/assets/vendor/js/helpers.js}"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script type="text/javascript" th:src="@{/assets/js/config.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/vendor/libs/jquery/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/vendor/libs/popper/popper.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/vendor/js/bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
+
+    <script type="text/javascript" th:src="@{/assets/vendor/js/menu.js}"></script>
+
+    <!-- Main JS -->
+    <script type="text/javascript" th:src="@{/assets/js/main.js}"></script>
+
+    <!-- Page JS -->
+    <script type="text/javascript" th:src="@{/assets/js/pages-account-settings-account.js}"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Menu -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <div class="app-brand demo">
+                <a href="index.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <svg width="25"
+                     viewBox="0 0 25 42"
+                     version="1.1"
+                     xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink" >
+                  <defs>
+                    <path d="M13.7918663,0.358365126 L3.39788168,7.44174259 C0.566865006,9.69408886 -0.379795268,12.4788597 0.557900856,15.7960551 C0.68998853,16.2305145 1.09562888,17.7872135 3.12357076,19.2293357 C3.8146334,19.7207684 5.32369333,20.3834223 7.65075054,21.2172976 L7.59773219,21.2525164 L2.63468769,24.5493413 C0.445452254,26.3002124 0.0884951797,28.5083815 1.56381646,31.1738486 C2.83770406,32.8170431 5.20850219,33.2640127 7.09180128,32.5391577 C8.347334,32.0559211 11.4559176,30.0011079 16.4175519,26.3747182 C18.0338572,24.4997857 18.6973423,22.4544883 18.4080071,20.2388261 C17.963753,17.5346866 16.1776345,15.5799961 13.0496516,14.3747546 L10.9194936,13.4715819 L18.6192054,7.984237 L13.7918663,0.358365126 Z"
+                          id="path-1" ></path>
+                    <path d="M5.47320593,6.00457225 C4.05321814,8.216144 4.36334763,10.0722806 6.40359441,11.5729822 C8.61520715,12.571656 10.0999176,13.2171421 10.8577257,13.5094407 L15.5088241,14.433041 L18.6192054,7.984237 C15.5364148,3.11535317 13.9273018,0.573395879 13.7918663,0.358365126 C13.5790555,0.511491653 10.8061687,2.3935607 5.47320593,6.00457225 Z"
+                          id="path-3" ></path>
+                    <path d="M7.50063644,21.2294429 L12.3234468,23.3159332 C14.1688022,24.7579751 14.397098,26.4880487 13.008334,28.506154 C11.6195701,30.5242593 10.3099883,31.790241 9.07958868,32.3040991 C5.78142938,33.4346997 4.13234973,34 4.13234973,34 C4.13234973,34 2.75489982,33.0538207 2.37032616e-14,31.1614621 C-0.55822714,27.8186216 -0.55822714,26.0572515 -4.05231404e-15,25.8773518 C0.83734071,25.6075023 2.77988457,22.8248993 3.3049379,22.52991 C3.65497346,22.3332504 5.05353963,21.8997614 7.50063644,21.2294429 Z"
+                          id="path-4" ></path>
+                    <path d="M20.6,7.13333333 L25.6,13.8 C26.2627417,14.6836556 26.0836556,15.9372583 25.2,16.6 C24.8538077,16.8596443 24.4327404,17 24,17 L14,17 C12.8954305,17 12,16.1045695 12,15 C12,14.5672596 12.1403557,14.1461923 12.4,13.8 L17.4,7.13333333 C18.0627417,6.24967773 19.3163444,6.07059163 20.2,6.73333333 C20.3516113,6.84704183 20.4862915,6.981722 20.6,7.13333333 Z"
+                          id="path-5" ></path>
+                  </defs>
+                  <g id="g-app-brand" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g id="Brand-Logo" transform="translate(-27.000000, -15.000000)">
+                      <g id="Icon" transform="translate(27.000000, 15.000000)">
+                        <g id="Mask" transform="translate(0.000000, 8.000000)">
+                          <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                          </mask>
+                          <use fill="#696cff" xlink:href="#path-1"></use>
+                          <g id="Path-3" mask="url(#mask-2)">
+                            <use fill="#696cff" xlink:href="#path-3"></use>
+                            <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-3"></use>
+                          </g>
+                          <g id="Path-4" mask="url(#mask-2)">
+                            <use fill="#696cff" xlink:href="#path-4"></use>
+                            <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-4"></use>
+                          </g>
+                        </g>
+                        <g
+                                id="Triangle"
+                                transform="translate(19.000000, 11.000000) rotate(-300.000000) translate(-19.000000, -11.000000) "
+                        >
+                          <use fill="#696cff" xlink:href="#path-5"></use>
+                          <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-5"></use>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </span>
+                    <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+            </div>
+
+            <div class="menu-inner-shadow"></div>
+
+            <ul class="menu-inner py-1">
+                <!-- Dashboard -->
+                <li class="menu-item active">
+                    <a href="index.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Analytics">Dashboard</div>
+                    </a>
+                </li>
+
+                <!-- Layouts -->
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-layout"></i>
+                        <div data-i18n="Layouts">Layouts</div>
+                    </a>
+
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="layouts-without-menu.html" class="menu-link">
+                                <div data-i18n="Without menu">Without menu</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="layouts-without-navbar.html" class="menu-link">
+                                <div data-i18n="Without navbar">Without navbar</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="layouts-container.html" class="menu-link">
+                                <div data-i18n="Container">Container</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="layouts-fluid.html" class="menu-link">
+                                <div data-i18n="Fluid">Fluid</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="layouts-blank.html" class="menu-link">
+                                <div data-i18n="Blank">Blank</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Pages</span>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <div data-i18n="Account Settings">Account Settings</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="pages-account-settings-account.html" class="menu-link">
+                                <div data-i18n="Account">Account</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="pages-account-settings-notifications.html" class="menu-link">
+                                <div data-i18n="Notifications">Notifications</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="pages-account-settings-connections.html" class="menu-link">
+                                <div data-i18n="Connections">Connections</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                        <div data-i18n="Authentications">Authentications</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="auth-login-basic.html" class="menu-link" target="_blank">
+                                <div data-i18n="Basic">Login</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="auth-register-basic.html" class="menu-link" target="_blank">
+                                <div data-i18n="Basic">Register</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
+                                <div data-i18n="Basic">Forgot Password</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+                        <div data-i18n="Misc">Misc</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="pages-misc-error.html" class="menu-link">
+                                <div data-i18n="Error">Error</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="pages-misc-under-maintenance.html" class="menu-link">
+                                <div data-i18n="Under Maintenance">Under Maintenance</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Components -->
+                <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
+                <!-- Cards -->
+                <li class="menu-item">
+                    <a href="cards-basic.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-collection"></i>
+                        <div data-i18n="Basic">Cards</div>
+                    </a>
+                </li>
+                <!-- User interface -->
+                <li class="menu-item">
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-box"></i>
+                        <div data-i18n="User interface">User interface</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="ui-accordion.html" class="menu-link">
+                                <div data-i18n="Accordion">Accordion</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-alerts.html" class="menu-link">
+                                <div data-i18n="Alerts">Alerts</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-badges.html" class="menu-link">
+                                <div data-i18n="Badges">Badges</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-buttons.html" class="menu-link">
+                                <div data-i18n="Buttons">Buttons</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-carousel.html" class="menu-link">
+                                <div data-i18n="Carousel">Carousel</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-collapse.html" class="menu-link">
+                                <div data-i18n="Collapse">Collapse</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-dropdowns.html" class="menu-link">
+                                <div data-i18n="Dropdowns">Dropdowns</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-footer.html" class="menu-link">
+                                <div data-i18n="Footer">Footer</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-list-groups.html" class="menu-link">
+                                <div data-i18n="List Groups">List groups</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-modals.html" class="menu-link">
+                                <div data-i18n="Modals">Modals</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-navbar.html" class="menu-link">
+                                <div data-i18n="Navbar">Navbar</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-offcanvas.html" class="menu-link">
+                                <div data-i18n="Offcanvas">Offcanvas</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-pagination-breadcrumbs.html" class="menu-link">
+                                <div data-i18n="Pagination &amp; Breadcrumbs">Pagination &amp; Breadcrumbs</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-progress.html" class="menu-link">
+                                <div data-i18n="Progress">Progress</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-spinners.html" class="menu-link">
+                                <div data-i18n="Spinners">Spinners</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-tabs-pills.html" class="menu-link">
+                                <div data-i18n="Tabs &amp; Pills">Tabs &amp; Pills</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-toasts.html" class="menu-link">
+                                <div data-i18n="Toasts">Toasts</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-tooltips-popovers.html" class="menu-link">
+                                <div data-i18n="Tooltips & Popovers">Tooltips &amp; popovers</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="ui-typography.html" class="menu-link">
+                                <div data-i18n="Typography">Typography</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Extended components -->
+                <li class="menu-item">
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-copy"></i>
+                        <div data-i18n="Extended UI">Extended UI</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
+                                <div data-i18n="Perfect Scrollbar">Perfect scrollbar</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="extended-ui-text-divider.html" class="menu-link">
+                                <div data-i18n="Text Divider">Text Divider</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="menu-item">
+                    <a href="icons-boxicons.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-crown"></i>
+                        <div data-i18n="Boxicons">Boxicons</div>
+                    </a>
+                </li>
+
+                <!-- Forms & Tables -->
+                <li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp; Tables</span></li>
+                <!-- Forms -->
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-detail"></i>
+                        <div data-i18n="Form Elements">Form Elements</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="forms-basic-inputs.html" class="menu-link">
+                                <div data-i18n="Basic Inputs">Basic Inputs</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="forms-input-groups.html" class="menu-link">
+                                <div data-i18n="Input groups">Input groups</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-detail"></i>
+                        <div data-i18n="Form Layouts">Form Layouts</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="form-layouts-vertical.html" class="menu-link">
+                                <div data-i18n="Vertical Form">Vertical Form</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="form-layouts-horizontal.html" class="menu-link">
+                                <div data-i18n="Horizontal Form">Horizontal Form</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Tables -->
+                <li class="menu-item">
+                    <a href="tables-basic.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-table"></i>
+                        <div data-i18n="Tables">Tables</div>
+                    </a>
+                </li>
+                <!-- Misc -->
+                <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
+                <li class="menu-item">
+                    <a
+                            href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+                            target="_blank"
+                            class="menu-link"
+                    >
+                        <i class="menu-icon tf-icons bx bx-support"></i>
+                        <div data-i18n="Support">Support</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a
+                            href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
+                            target="_blank"
+                            class="menu-link"
+                    >
+                        <i class="menu-icon tf-icons bx bx-file"></i>
+                        <div data-i18n="Documentation">Documentation</div>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page ms-4">
+            <h3>Quản lý phiếu giảm giá</h3>
+            <hr>
+            <nav class="me-2">
+                <!--    Form tìm kiếm-->
+                <div class="shadow-lg bg-white">
+                    <form th:action="@{/phieu-giam-gia/get-list-pgg/search}" method="get" class="py-4">
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-4 ms-5" >
+                                <div class="d-flex float-end me-2">
+                                    <input class="form-control" type="search" placeholder="Tìm phiếu giảm giá" aria-label="Search"
+                                           style="height: 30px; width: 300px; font-size: 14px;" name="search" th:value="${search}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 text-dark" >
+                                <label class="me-1" style="font-size: 14px">Trạng thái:</label>
+                                <!--            <input type="hidden" name="trangThai" id="trangThaiHidden" value="">-->
+                                <div class="form-check form-check-inline" style="font-size: 13px">
+                                    <input class="form-check-input" type="radio" name="trangThai" value="0" th:checked="${trangThai == 0}"  th:unchecked>
+
+                                    <label class="form-check-label">Chưa diễn ra</label>
+                                </div>
+                                <div class="form-check form-check-inline" style="font-size: 13px">
+                                    <input class="form-check-input" type="radio" name="trangThai"  value="1" th:checked="${trangThai == 1}"  th:unchecked>
+                                    <label class="form-check-label">Đang diễn ra</label>
+                                </div>
+                                <div class="form-check form-check-inline" style="font-size: 13px">
+                                    <input class="form-check-input" type="radio" name="trangThai" value="2" th:checked="${trangThai == 2}"  th:unchecked>
+                                    <label class="form-check-label">Đã kết thúc</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row mt-3">
+                            <!--        Ngày bắt đầu-->
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <div class="form-outline datetimepicker">
+                                        <input type="datetime-local" class="form-control text-dark" th:value="${ngayBatDau}"
+                                               id="ngayBatDau" name="ngayBatDau"
+                                               style="height: 35px; font-size: 13px; text-align: center; padding-top: 15px;">
+                                        <label for="ngayBatDau" class="text-dark" style="font-size: 15px; border-radius: 5px 5px 0px 0px;">Ngày bắt
+                                            đầu</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--        Ngày kết thúc-->
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <div class="form-outline datetimepicker">
+                                        <input type="datetime-local" class="form-control text-dark" th:value="${ngayKetThuc}"
+                                               id="ngayKetThuc" name="ngayKetThuc"
+                                               style="height: 35px; font-size: 13px; text-align: center; padding-top: 15px;">
+                                        <label for="ngayKetThuc" class=" text-dark" style="font-size: 15px;border-radius: 5px 5px 0px 0px;">Ngày kết
+                                            thúc</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <a th:href="@{/phieu-giam-gia/index}" class="btn btn-secondary"
+                                   style="height: 30px;width: 100px;color: black;font-size: 12px;">Làm
+                                    mới</a>
+                                <button class="btn btn-outline-success py-0" type="submit"
+                                        style="height: 30px;width: 100px;background-color: #E7625F; color: white; border-color: #E7625F;font-size: 12px;">Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!--    Form tìm kiếm-->
+                </div>
+
+                <br>
+                <!--    Tạo mới-->
+                <div class="row text-end me-5">
+                    <div class="" style="color: #EF3340;">
+                        <a th:href="@{/phieu-giam-gia/add-pgg}">
+                            <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M7.33 2H16.66C20.06 2 22 3.92 22 7.33V16.67C22 20.06 20.07 22 16.67 22H7.33C3.92 22 2 20.06 2 16.67V7.33C2 3.92 3.92 2 7.33 2ZM12.82 12.83H15.66C16.12 12.82 16.49 12.45 16.49 11.99C16.49 11.53 16.12 11.16 15.66 11.16H12.82V8.34C12.82 7.88 12.45 7.51 11.99 7.51C11.53 7.51 11.16 7.88 11.16 8.34V11.16H8.33C8.11 11.16 7.9 11.25 7.74 11.4C7.59 11.56 7.5 11.769 7.5 11.99C7.5 12.45 7.87 12.82 8.33 12.83H11.16V15.66C11.16 16.12 11.53 16.49 11.99 16.49C12.45 16.49 12.82 16.12 12.82 15.66V12.83Z"
+                                      fill="currentColor"></path>
+                            </svg>
+                            <label>Tạo mới</label>
+                        </a>
+                    </div>
+                </div>
+                <!--    Bảng phiếu giảm giá-->
+                <div class="card bg-white">
+                    <div class="card-body  p-0 m-0">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="tbl_pgg">
+                                <thead class="table-light">
+                                <tr>
+                                    <th>
+                                        <span>STT</span>
+                                    </th>
+                                    <th>
+                                        <span>Mã </span>
+                                    </th>
+                                    <th>
+                                        <div style="justify-content: space-around; display: flex;">
+                                            <span>Tên phiếu</span>
+                                            <div>
+                                                <a th:href="@{/phieu-giam-gia/sort-name-search-desc(search=${search},trangThai=${trangThai},ngayBatDau=${ngayBatDau},ngayKetThuc=${ngayKetThuc})}" class="m-0 p-0" style="border: none; background-color: white;">
+                                                    <svg class="icon-32" width="15" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                                d="M13.131 7.36922C13.189 7.42572 13.437 7.63906 13.641 7.8378C14.924 9.00292 17.024 12.0424 17.665 13.6332C17.768 13.8748 17.986 14.4856 18 14.812C18 15.1247 17.928 15.4228 17.782 15.7073C17.578 16.0619 17.257 16.3463 16.878 16.5022C16.615 16.6025 15.828 16.7584 15.814 16.7584C14.953 16.9143 13.554 17 12.008 17C10.535 17 9.193 16.9143 8.319 16.7867C8.305 16.772 7.327 16.6162 6.992 16.4457C6.38 16.133 6 15.5222 6 14.8685V14.812C6.015 14.3863 6.395 13.491 6.409 13.491C7.051 11.9859 9.048 9.01656 10.375 7.82319C10.375 7.82319 10.716 7.48709 10.929 7.34096C11.235 7.11301 11.614 7 11.993 7C12.416 7 12.81 7.12762 13.131 7.36922Z"
+                                                                fill="currentColor"></path>
+                                                    </svg>
+                                                </a>
+                                                <a th:href="@{/phieu-giam-gia/sort-name-search-asc(search=${search},trangThai=${trangThai},ngayBatDau=${ngayBatDau},ngayKetThuc=${ngayKetThuc})}" class="m-0 p-0" style="border: none; background-color: white;">
+                                                    <svg class="icon-32" width="15" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                                d="M10.869 16.6308C10.811 16.5743 10.563 16.3609 10.359 16.1622C9.076 14.9971 6.976 11.9576 6.335 10.3668C6.232 10.1252 6.014 9.51437 6 9.18802C6 8.8753 6.072 8.5772 6.218 8.29274C6.422 7.93814 6.743 7.65368 7.122 7.49781C7.385 7.39747 8.172 7.2416 8.186 7.2416C9.047 7.08573 10.446 7 11.992 7C13.465 7 14.807 7.08573 15.681 7.21335C15.695 7.22796 16.673 7.38383 17.008 7.55431C17.62 7.86702 18 8.47784 18 9.13151V9.18802C17.985 9.61374 17.605 10.509 17.591 10.509C16.949 12.0141 14.952 14.9834 13.625 16.1768C13.625 16.1768 13.284 16.5129 13.071 16.659C12.765 16.887 12.386 17 12.007 17C11.584 17 11.19 16.8724 10.869 16.6308Z"
+                                                                fill="currentColor"></path>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div style="justify-content: space-around; display: flex;">
+                                            <span>Thời gian</span>
+                                            <div>
+                                                <a th:href="@{/phieu-giam-gia/sort-time-search-desc(search=${search},trangThai=${trangThai},ngayBatDau=${ngayBatDau},ngayKetThuc=${ngayKetThuc})}" class="m-0 p-0" style="border: none; background-color: white;">
+                                                    <svg class="icon-32" width="15" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                                d="M13.131 7.36922C13.189 7.42572 13.437 7.63906 13.641 7.8378C14.924 9.00292 17.024 12.0424 17.665 13.6332C17.768 13.8748 17.986 14.4856 18 14.812C18 15.1247 17.928 15.4228 17.782 15.7073C17.578 16.0619 17.257 16.3463 16.878 16.5022C16.615 16.6025 15.828 16.7584 15.814 16.7584C14.953 16.9143 13.554 17 12.008 17C10.535 17 9.193 16.9143 8.319 16.7867C8.305 16.772 7.327 16.6162 6.992 16.4457C6.38 16.133 6 15.5222 6 14.8685V14.812C6.015 14.3863 6.395 13.491 6.409 13.491C7.051 11.9859 9.048 9.01656 10.375 7.82319C10.375 7.82319 10.716 7.48709 10.929 7.34096C11.235 7.11301 11.614 7 11.993 7C12.416 7 12.81 7.12762 13.131 7.36922Z"
+                                                                fill="currentColor"></path>
+                                                    </svg>
+                                                </a>
+                                                <a th:href="@{/phieu-giam-gia/sort-time-search-asc(search=${search},trangThai=${trangThai},ngayBatDau=${ngayBatDau},ngayKetThuc=${ngayKetThuc})}" class="m-0 p-0" style="border: none; background-color: white;">
+                                                    <svg class="icon-32" width="15" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                                d="M10.869 16.6308C10.811 16.5743 10.563 16.3609 10.359 16.1622C9.076 14.9971 6.976 11.9576 6.335 10.3668C6.232 10.1252 6.014 9.51437 6 9.18802C6 8.8753 6.072 8.5772 6.218 8.29274C6.422 7.93814 6.743 7.65368 7.122 7.49781C7.385 7.39747 8.172 7.2416 8.186 7.2416C9.047 7.08573 10.446 7 11.992 7C13.465 7 14.807 7.08573 15.681 7.21335C15.695 7.22796 16.673 7.38383 17.008 7.55431C17.62 7.86702 18 8.47784 18 9.13151V9.18802C17.985 9.61374 17.605 10.509 17.591 10.509C16.949 12.0141 14.952 14.9834 13.625 16.1768C13.625 16.1768 13.284 16.5129 13.071 16.659C12.765 16.887 12.386 17 12.007 17C11.584 17 11.19 16.8724 10.869 16.6308Z"
+                                                                fill="currentColor"></path>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div style="justify-content: space-around; display: flex;">
+                                            <span>Loại</span>
+                                            <div>
+                                                <a th:href="@{/phieu-giam-gia/sort-type-search-desc(search=${search},trangThai=${trangThai},ngayBatDau=${ngayBatDau},ngayKetThuc=${ngayKetThuc})}" class="m-0 p-0" style="border: none; background-color: white;">
+                                                    <svg class="icon-32" width="15" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                                d="M13.131 7.36922C13.189 7.42572 13.437 7.63906 13.641 7.8378C14.924 9.00292 17.024 12.0424 17.665 13.6332C17.768 13.8748 17.986 14.4856 18 14.812C18 15.1247 17.928 15.4228 17.782 15.7073C17.578 16.0619 17.257 16.3463 16.878 16.5022C16.615 16.6025 15.828 16.7584 15.814 16.7584C14.953 16.9143 13.554 17 12.008 17C10.535 17 9.193 16.9143 8.319 16.7867C8.305 16.772 7.327 16.6162 6.992 16.4457C6.38 16.133 6 15.5222 6 14.8685V14.812C6.015 14.3863 6.395 13.491 6.409 13.491C7.051 11.9859 9.048 9.01656 10.375 7.82319C10.375 7.82319 10.716 7.48709 10.929 7.34096C11.235 7.11301 11.614 7 11.993 7C12.416 7 12.81 7.12762 13.131 7.36922Z"
+                                                                fill="currentColor"></path>
+                                                    </svg>
+                                                </a>
+                                                <a th:href="@{/phieu-giam-gia/sort-type-search-asc(search=${search},trangThai=${trangThai},ngayBatDau=${ngayBatDau},ngayKetThuc=${ngayKetThuc})}" class="m-0 p-0" style="border: none; background-color: whitesmoke;">
+                                                    <svg class="icon-32" width="15" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                                d="M10.869 16.6308C10.811 16.5743 10.563 16.3609 10.359 16.1622C9.076 14.9971 6.976 11.9576 6.335 10.3668C6.232 10.1252 6.014 9.51437 6 9.18802C6 8.8753 6.072 8.5772 6.218 8.29274C6.422 7.93814 6.743 7.65368 7.122 7.49781C7.385 7.39747 8.172 7.2416 8.186 7.2416C9.047 7.08573 10.446 7 11.992 7C13.465 7 14.807 7.08573 15.681 7.21335C15.695 7.22796 16.673 7.38383 17.008 7.55431C17.62 7.86702 18 8.47784 18 9.13151V9.18802C17.985 9.61374 17.605 10.509 17.591 10.509C16.949 12.0141 14.952 14.9834 13.625 16.1768C13.625 16.1768 13.284 16.5129 13.071 16.659C12.765 16.887 12.386 17 12.007 17C11.584 17 11.19 16.8724 10.869 16.6308Z"
+                                                                fill="currentColor"></path>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="text-center">Giá trị</th>
+                                    <th class="text-center">Số lượng</th>
+                                    <th class="text-center">Trạng thái</th>
+                                    <th class="text-center">Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbl_pgg_body">
+                                <tr th:each="phieu, pggListStat : ${pggList}" th:object="${phieu}">
+                                    <td th:text="${pggListStat.index+1}"></td>
+                                    <td th:text="*{maPhieuGiamGia}"></td>
+                                    <td class="text-center" th:text="*{tenPhieuGiamGia}"></td>
+                                    <td>
+                                        <span th:text="${#dates.format(phieu.ngayBatDau, 'HH:mm dd/MM/yyyy')}"></span>
+                                        <span>-</span>
+                                        <span th:text="${#dates.format(phieu.ngayKetThuc, 'HH:mm dd/MM/yyyy')}"></span>
+                                    </td>
+                                    <td class="text-center" th:if="*{loaiGiamGia == 0}">Giảm theo % </td>
+                                    <td class="text-center" th:if="*{loaiGiamGia == 1}">Giảm theo tiền </td>
+<!--                                    <td class="text-center" th:if="*{soTienDuocGiam != 0}" th:text="*{soTienDuocGiam}"></td>-->
+                                    <td class="text-center" th:if="${phieu.soTienDuocGiam != 0}" th:text="${#numbers.formatDecimal(phieu.soTienDuocGiam, 1, 0, 'COMMA') + ' VND'}"></td>
+
+                                    <td class="text-center" th:if="*{phanTramGiam != 0}" th:text="*{phanTramGiam}">
+                                    </td>
+                                    <td class="text-center" th:text="*{soLuong}">
+                                    </td>
+                                    <td class="text-center text-warning" th:if="*{trangThai == 0}">
+                                        Chưa diễn ra
+                                    </td>
+                                    <td class="text-center text-success" th:if="*{trangThai == 1}">
+                                        Đang diễn ra
+                                    </td>
+                                    <td class="text-center text-danger" th:if="*{trangThai == 2}">
+                                        Đã kết thúc
+                                    </td>
+                                    <td class="text-center">
+                                        <div>
+                                            <a class="btn btn-sm btn-icon text-primary flex-end" data-bs-toggle="tooltip"
+                                               title="Cập nhật" th:href="@{/phieu-giam-gia/update-pgg/{id}(id=${phieu.id})}">
+                                                <svg class="icon-32" width="25" viewBox="0 0 24 24" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                            d="M11.4925 2.78906H7.75349C4.67849 2.78906 2.75049 4.96606 2.75049 8.04806V16.3621C2.75049 19.4441 4.66949 21.6211 7.75349 21.6211H16.5775C19.6625 21.6211 21.5815 19.4441 21.5815 16.3621V12.3341"
+                                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round"></path>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                          d="M8.82812 10.921L16.3011 3.44799C17.2321 2.51799 18.7411 2.51799 19.6721 3.44799L20.8891 4.66499C21.8201 5.59599 21.8201 7.10599 20.8891 8.03599L13.3801 15.545C12.9731 15.952 12.4211 16.181 11.8451 16.181H8.09912L8.19312 12.401C8.20712 11.845 8.43412 11.315 8.82812 10.921Z"
+                                                          stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                          stroke-linejoin="round"></path>
+                                                    <path d="M15.1655 4.60254L19.7315 9.16854" stroke="currentColor"
+                                                          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    </path>
+                                                </svg>
+                                            </a>
+                                            <a class="btn btn-sm btn-icon text-success " data-bs-toggle="tooltip"
+                                               title="Ngừng hoạt động" href="#">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="radioInput" name="radioGroup">
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <nav id="pagination_container" aria-label="Page navigation example" class="" style="height: 40px;">
+                        <ul class="pagination justify-content-center">
+
+                            <li th:if="${pggList.number ==0}" class="page-item disabled" style="font-size: 14px; height: 8px;">
+                                <a class="page-link disabled" href="" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li th:if="${pggList.number >0}" class="page-item" style="font-size: 14px; height: 8px;">
+                                <a class="page-link" th:href="@{/phieu-giam-gia/get-list-pgg/search(search=${search},trangThai=${trangThai},ngayBatDau=${ngayBatDau},ngayKetThuc=${ngayKetThuc},page=${pggList.number - 1})}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item" id="page_total" style="font-size: 14px; height: 8px;"><a class="page-link">[[${pggList.number +1}]]/[[${pggList.totalPages}]]</a></li>
+                            <li th:if="${pggList.totalPages - 1 == pggList.number}" class="page-item disabled" style="font-size: 14px; height: 8px;">
+                                <a class="page-link disabled" href="" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li th:if="${pggList.totalPages - 1 > pggList.number}" class="page-item" style="font-size: 14px; height: 8px;">
+                                <a class="page-link" th:href="@{/phieu-giam-gia/get-list-pgg/search(search=${search},trangThai=${trangThai},ngayBatDau=${ngayBatDau},ngayKetThuc=${ngayKetThuc},page=${pggList.number + 1})}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<script>
+    var trangThaiHidden = document.getElementById("trangThaiHidden");
+    var trangThaiRadios = document.getElementsByName("trangThai");
+
+    // Gán sự kiện change cho từng radio button
+    for (var i = 0; i < trangThaiRadios.length; i++) {
+        trangThaiRadios[i].addEventListener("change", function() {
+            trangThaiHidden.value = this.value;
+        });
+    }
+
+    // Kiểm tra xem có radio nào được chọn hay không
+    var isRadioSelected = false;
+    for (var i = 0; i < trangThaiRadios.length; i++) {
+        if (trangThaiRadios[i].checked) {
+            isRadioSelected = true;
+            break;
+        }
+    }
+
+    // Gán giá trị mặc định nếu không có radio nào được chọn
+    if (!isRadioSelected) {
+        trangThaiHidden.value = "3";
+    }
+</script>
+<script src="../assets/vendor/libs/jquery/jquery.js"></script>
+<script src="../assets/vendor/libs/popper/popper.js"></script>
+<script src="../assets/vendor/js/bootstrap.js"></script>
+<script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<script src="../assets/vendor/js/menu.js"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+<!-- Main JS -->
+<script src="../assets/js/main.js"></script>
+
+<!-- Page JS -->
+<script src="../assets/js/dashboards-analytics.js"></script>
+<!--<script src="../js/phieu_giam_gia.js"></script>-->
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<script th:src="@{../js/jquery.min.js}"></script>
+</body>
+</html>
