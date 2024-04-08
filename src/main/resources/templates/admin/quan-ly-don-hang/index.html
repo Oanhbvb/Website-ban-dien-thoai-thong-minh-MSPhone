@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{/layouts/main.html}">
+<head>
+    <meta charset="utf-8"/>
+    <title>title</title>
+</head>
+
+<body>
+<article layout:fragment="content">
+
+    <!-- Bootstrap Table danh sách sản phẩm đã mua -->
+    <div class="card mt-3">
+        <h4 class="card-header d-flex justify-content-between align-items-center">
+            <!-- SEARCH AND FILTER -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="search">
+                        <form th:action="@{/quan-ly-don-hang/search}" method="POST">
+                            <input placeholder="Mã đơn hàng/số điện thoại khách hàng" type="text" th:name="search">
+                            <button type="submit"><i style="color: aliceblue; font-size: 20px" class="bi bi-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <form class="col-md-4 d-flex ms-5" th:action="@{/quan-ly-don-hang/search-by-date}" method="get">
+                    <div class="col-md-5 mx-2">
+                        <input type="text" class="form-control" placeholder="Từ ngày" onfocus="(this.type='date')"
+                               th:name="fromDate"
+                               onblur="(this.type='text')"/>
+                    </div>
+                    <div class="col-md-5 ms-2">
+                        <input type="text" class="form-control" placeholder="Đến ngày" onfocus="(this.type='date')"
+                               th:name="toDate"
+                               onblur="(this.type='text')"/>
+                    </div>
+                    <div class="col-md-2">
+                        <button style="border: none; background-color: white;" type="submit"><i
+                                style="font-size: 36px; color: rgb(33, 33, 33);" class="bi bi-filter-square"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="col-md-3 ms-5 text-end">
+                    <button class="btn btn-primary">+ Tạo hóa đơn</button>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-text border-0 fw-bold">Loại đơn hàng:</span>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Tất cả
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                                        <li><a class="dropdown-item" th:href="@{/quan-ly-don-hang/filter-by-loai-hd(loaiHoaDon=0)}">Tất cả</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/quan-ly-don-hang/filter-by-loai-hd(loaiHoaDon=1)}">Tại quầy</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/quan-ly-don-hang/filter-by-loai-hd(loaiHoaDon=2)}">Ship hàng</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-text border-0 fw-bold">Trạng thái:</span>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Tất cả
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                                        <li><a class="dropdown-item" th:href="@{/quan-ly-don-hang/filter-by-status(trangThai=0)}">Tất cả</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/quan-ly-don-hang/filter-by-status(trangThai=1)}">Hoàn thành</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/quan-ly-don-hang/filter-by-status(trangThai=2)}">Chờ xác nhận</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </h4>
+
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table id="orderTable" class="table table-striped">
+                    <caption class="ms-4">
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>MÃ ĐƠN HÀNG</th>
+                        <th>NHÂN VIÊN</th>
+                        <th>KHÁCH HÀNG</th>
+                        <th>LOẠI ĐƠN HÀNG</th>
+                        <th>TỔNG TIỀN</th>
+                        <th>TRẠNG THÁI</th>
+                        <th>NGÀY TẠO</th>
+                        <th>THAO TÁC</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="hd, i: ${listHD}">
+                        <td th:text="${i.index + 1}"></td>
+                        <td th:text="${hd.maHD}"></td>
+                        <td th:text="${hd.idNhanVien.maNhanVien}"></td>
+                        <td th:text="${hd.idKhachHang.tenKhachHang + ' - ' + hd.idKhachHang.getSdt()}"></td>
+                        <td>
+                            <span class="badge me-1"
+                                  th:class="${hd.loaiHoaDon == 1 ? 'bg-label-primary badge me-1' : 'badge me-1 bg-label-success'}">
+                                [[${hd.loaiHoaDon == 1 ?  'Tại quầy': 'Giao hàng'}]]
+                            </span>
+                        </td>
+                        <td th:text="${#strings.replace(#numbers.formatDecimal(hd.tongTien, 0, 'COMMA', 2, 'POINT'), '.00', '')}"></td>
+                        <td>
+                            <span class="badge me-1"
+                                  th:class="${hd.trangThai == 1 ? 'bg-label-success badge me-1' : 'badge me-1 bg-label-danger'}">
+                                [[${hd.trangThai == 1 ?  'Chờ xác nhận': 'Hoàn thành'}]]
+                            </span>
+                        </td>
+
+                        <td th:text="${#dates.format(hd.ngayTao,'HH:mm:ss yyyy-MM-dd' )}"></td>
+                        <td>
+                            <a class="dropdown-item" th:href="@{/quan-ly-don-hang/view-detail/{id}(id=${hd.id})}">
+                                <i class="bx bx-edit-alt me-1"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+
+
+                </table>
+                <nav aria-label="Page navigation" th:if="${totalPages > 0}">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item prev" th:style="${number == 0 ? 'opacity: 0.5; pointer-events: none;' : ''}"
+                            th:if="${number == 0}">
+                            <a class="page-link" href="#">
+                                <i class="tf-icon bx bx-chevrons-left" style="color: #010a17;"></i>
+                            </a>
+                        </li>
+                        <li class="page-item prev" th:if="${number > 0}">
+                            <a class="page-link" th:href="@{/quan-ly-don-hang/hien-thi(page=${number-1})}">
+                                <i class="tf-icon bx bx-chevrons-left" style="color: #010a17;"></i>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link bg-label-primary text-dark" href="javascript:void(0);"
+                               th:text="${number + 1}" style="background-color: #010a17;"></a>
+                        </li>
+                        <li class="page-item next" th:if="${number < totalPages - 1}">
+                            <a class="page-link" th:href="@{/quan-ly-don-hang/hien-thi(page=${number+1})}">
+                                <i class="tf-icon bx bx-chevrons-right" style="color: #010a17;"></i>
+                            </a>
+                        </li>
+                        <li class="page-item next" th:style="${number == totalPages - 1 ? 'opacity: 0.5; pointer-events: none;' : ''}"
+                            th:if="${number == totalPages - 1}">
+                            <a class="page-link" href="#">
+                                <i class="tf-icon bx bx-chevrons-right" style="color:#010a17;"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+
+            </div>
+        </div>
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+    </script>
+
+</article>
+</body>
+
+
+
+</html>
+

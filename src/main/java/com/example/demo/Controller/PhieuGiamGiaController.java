@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.beans.PropertyEditorSupport;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -525,7 +526,7 @@ public class PhieuGiamGiaController {
 
     public PhieuGiamGia getOne(
             Model model,
-            @PathVariable("id") Long id
+            @PathVariable("id") BigInteger id
     ) {
         return pggRE.findById(id).get();
     }
@@ -545,7 +546,7 @@ public class PhieuGiamGiaController {
             @RequestParam("page") Optional<Integer> pageParam,
             @Validated @ModelAttribute("pgg") PhieuGiamGiaBean pggForm,
             BindingResult error,
-            @RequestParam("checkBoxKH") Integer[] selectedKHValues
+            @RequestParam("checkBoxKH") BigInteger[] selectedKHValues
     ) throws ParseException {
         if (error.hasErrors() || !pggForm.isNgayKetThucSauNgayBatDau() || !pggForm.checkSoLuong() || !pggForm.isSoTienDuocGiamVaGiaTriToiThieu()) {
             if (!pggForm.isNgayKetThucSauNgayBatDau()) {
@@ -646,17 +647,17 @@ public class PhieuGiamGiaController {
 //            Thêm phiếu giảm giá_khách hàng
 
             if(pggForm.getTrangThaiCongKhai() == 1){
-                for (Integer idKH:selectedKHValues) {
+                for (BigInteger idKH:selectedKHValues) {
                     PhieuGG_KH phieuGG_kh = new PhieuGG_KH();
                     phieuGG_kh.setVoucherID(pggNew.getId());
-                    phieuGG_kh.setKhachHangID(Long.parseLong(String.valueOf(idKH)));
+                    phieuGG_kh.setKhachHangID(idKH);
                     this.pgg_khRE.save(phieuGG_kh);
                 }
             }
             // Gửi email
             List<String> lstEmails = new ArrayList<>(); // Lấy danh sách email từ service DiscountService
-            for (Integer idKH:selectedKHValues) {
-                String e = khachHangRE.getReferenceById(Long.parseLong(String.valueOf(idKH))).getEmail();
+            for (BigInteger idKH:selectedKHValues) {
+                String e = khachHangRE.getReferenceById(idKH).getEmail();
                 lstEmails.add(e);
             }
             String subject = "Phiếu giảm giá MPShop";
@@ -677,7 +678,7 @@ public class PhieuGiamGiaController {
     @GetMapping("/update-pgg/{id}")
     public String getUIEdit(
             Model model,
-            @PathVariable("id") Long id
+            @PathVariable("id") BigInteger id
     ) {
         PhieuGiamGia pgg = pggRE.getReferenceById(id);
         model.addAttribute("pgg", pgg);
@@ -685,7 +686,7 @@ public class PhieuGiamGiaController {
     }
 
     @PostMapping("/update-status/{id}")
-    public ResponseEntity<Map<String, Object>> updateTrangThai(@PathVariable("id") Long id) throws ParseException {
+    public ResponseEntity<Map<String, Object>> updateTrangThai(@PathVariable("id") BigInteger id) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -746,7 +747,7 @@ public class PhieuGiamGiaController {
 
     @PutMapping("/edit/{id}")
     public String put(
-            @PathVariable("id") Long id,
+            @PathVariable("id") BigInteger id,
             Model model,
             @Validated @ModelAttribute("pgg") PhieuGiamGiaBean pggForm,
             BindingResult error

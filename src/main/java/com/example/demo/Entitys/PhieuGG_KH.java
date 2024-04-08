@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigInteger;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,11 +18,12 @@ public class PhieuGG_KH {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private BigInteger id;
 
     @Column(name = "KhachHang_ID")
-    private Long khachHangID;
+    private BigInteger khachHangID;
 
     @Column(name = "Voucher_ID")
-    private Long voucherID;
+    private BigInteger voucherID;
+
 }

@@ -1,13 +1,13 @@
 package com.example.demo.Entitys;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 @Data
@@ -18,9 +18,9 @@ import java.util.Date;
 public class PhieuGiamGia {
 
     @Id
-    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "ID")
+    private BigInteger id;
 
     @Column(name = "Ma_VC")
     private String maPhieuGiamGia;
@@ -106,4 +106,5 @@ public class PhieuGiamGia {
                 ", trangThai=" + trangThai +
                 '}';
     }
+
 }

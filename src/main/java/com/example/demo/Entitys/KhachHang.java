@@ -1,23 +1,27 @@
 package com.example.demo.Entitys;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+//<<<<<<< HEAD
+//import lombok.AllArgsConstructor;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+//import lombok.Setter;
 
+import lombok.*;
+
+import java.math.BigInteger;
+
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "KhachHang")
 public class KhachHang {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private BigInteger id;
 
     @Column(name = "TenKhachHang")
     private String hoTen;
@@ -27,4 +31,17 @@ public class KhachHang {
 
     @Column(name = "Email")
     private String email;
+
+    @Column(name = "MatKhau")
+    private String matKhau;
+
+    @Column(name = "IDDiaChi")
+    private Integer idDiaChi;
+
+    @Column(name = "TrangThai")
+    private Integer trangThai;
+
+    public KhachHang(String sdt) {
+        this.sdt = sdt;
+    }
 }

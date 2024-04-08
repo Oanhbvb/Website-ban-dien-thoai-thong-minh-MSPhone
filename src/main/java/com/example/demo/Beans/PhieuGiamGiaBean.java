@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.regex.Pattern;
 
 import java.math.BigDecimal;
@@ -24,7 +25,7 @@ import java.util.Date;
 @Component
 public class PhieuGiamGiaBean {
 
-    private Long id;
+    private BigInteger id;
 
     private String maPhieuGiamGia;
 

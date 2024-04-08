@@ -10,12 +10,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface PhieuGiamGiaRepository extends JpaRepository<PhieuGiamGia, Long> {
+public interface PhieuGiamGiaRepository extends JpaRepository<PhieuGiamGia, BigInteger> {
 
     @Query("SELECT COUNT(p) FROM PhieuGiamGia p")
     Long countAllPhieuGiamGia();
