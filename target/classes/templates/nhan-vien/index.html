@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{/layouts/main.html}">
+<head>
+    <meta charset="utf-8"/>
+    <title>title</title>
+</head>
+
+<body>
+
+<!-- ALERT END -->
+
+<article layout:fragment="content">
+    <!-- ALERT -->
+    <div th:if="${success != null}" class="success slideInRight" id="successMessage">
+        <div class="success__icon">
+            <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                <path clip-rule="evenodd"
+                      d="m12 1c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11zm4.768 9.14c.0878-.1004.1546-.21726.1966-.34383.0419-.12657.0581-.26026.0477-.39319-.0105-.13293-.0475-.26242-.1087-.38085-.0613-.11844-.1456-.22342-.2481-.30879-.1024-.08536-.2209-.14938-.3484-.18828s-.2616-.0519-.3942-.03823c-.1327.01366-.2612.05372-.3782.1178-.1169.06409-.2198.15091-.3027.25537l-4.3 5.159-2.225-2.226c-.1886-.1822-.4412-.283-.7034-.2807s-.51301.1075-.69842.2929-.29058.4362-.29285.6984c-.00228.2622.09851.5148.28067.7034l3 3c.0983.0982.2159.1748.3454.2251.1295.0502.2681.0729.4069.0665.1387-.0063.2747-.0414.3991-.1032.1244-.0617.2347-.1487.3236-.2554z"
+                      fill="#393a37" fill-rule="evenodd"></path>
+            </svg>
+        </div>
+        <div class="success__title" th:text="${success}"></div>
+    </div>
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <hr class="my-2"/>
+        <!-- INPUT SEARCH -->
+        <div class="search">
+            <form th:action="@{/nhan-vien/search}" method="POST">
+                <input placeholder="Search..." type="text" th:name="search">
+                <button type="submit">Go</button>
+            </form>
+        </div>
+        <!-- END SEARCH -->
+        <!-- Bootstrap Table with Caption -->
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex row align-items-center mb-3">
+                    <div class="col-2 text-sm-left">
+                        <div class="dropdown">
+                            <button class="btn btn-link dropdown-toggle" type="button" id=""
+                                    data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: 500;">
+                                Trạng thái:
+                            </button>
+                            <ul class="dropdown-menu py-3 " aria-labelledby="statusDropdown">
+                                <li>
+                                    <div class="form-check mx-3 mb-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1">
+                                            Option 1
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-check mx-3 mb-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="checkbox2">
+                                        <label class="form-check-label" for="checkbox2">
+                                            Option 2
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-check mx-3">
+                                        <input class="form-check-input" type="checkbox" value="" id="checkbox3">
+                                        <label class="form-check-label" for="checkbox3">
+                                            Option 3
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-9 text-sm-left">
+                        <button class="btn btn-link dropdown-toggle" type="button" id="statusDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: 500;"> Chức vụ:
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="statusDropdown">
+                            <li><a class="dropdown-item" href="#">Option 1</a></li>
+                            <li><a class="dropdown-item" href="#">Option 2</a></li>
+                            <li><a class="dropdown-item" href="#">Option 3</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-1">
+                        <button class="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20"
+                                 fill="none" class="svg-icon">
+                                <g stroke-width="1.5" stroke-linecap="round" stroke="#FFFFFF">
+                                    <circle r="7.5" cy="10" cx="10"></circle>
+                                    <path d="m9.99998 7.5v5"></path>
+                                    <path d="m7.5 9.99998h5"></path>
+                                </g>
+                            </svg>
+                            <a class="lable" th:href="@{/nhan-vien/view-add}">Add</a>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-hover ">
+
+                        <caption class="ms-4">
+                            <nav aria-label="Page navigation" th:if="${listNV.totalPages > 0}">
+                                <ul class="pagination pagination-sm">
+                                    <!-- Nút prev -->
+                                    <li class="page-item prev" th:if="${listNV.number == 0}"
+                                        style="opacity: 0.5; pointer-events: none;">
+                                        <a class="page-link" href="#">
+                                            <i class="tf-icon bx bx-chevrons-left bg-label-primary"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item prev" th:if="${listNV.number > 0}">
+                                        <a class="page-link" th:href="@{/nhan-vien/hien-thi(page=${listNV.number-1})}">
+                                            <i class="tf-icon bx bx-chevrons-left bg-label-primary"></i>
+                                        </a>
+                                    </li>
+
+                                    <!-- Trang hiện tại -->
+                                    <li class="page-item">
+                                        <a class="page-link bg-label-primary" href="javascript:void(0);"
+                                           th:text="${listNV.number + 1}"></a>
+                                    </li>
+
+                                    <!-- Nút next -->
+                                    <li class="page-item next" th:if="${listNV.number < listNV.totalPages - 1}">
+                                        <a class="page-link" th:href="@{/nhan-vien/hien-thi(page=${listNV.number+1})}">
+                                            <i class="tf-icon bx bx-chevrons-right bg-label-primary"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item next" th:if="${listNV.number == listNV.totalPages - 1}"
+                                        style="opacity: 0.5; pointer-events: none;">
+                                        <a class="page-link" href="#">
+                                            <i class="tf-icon bx bx-chevrons-right bg-label-primary"></i>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </nav>
+
+                        </caption>
+                        <thead class="table-light">
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="nv, i : ${listNV}">
+                            <td th:text="${i.index + 1}"></td>
+                            <td th:text="${nv.maNhanVien}"></td>
+                            <td th:text="${nv.tenNhanVien}"></td>
+                            <td th:text="${nv.email}"></td>
+                            <td th:text="${nv.sdt}"></td>
+                            <td>
+                                        <span class="badge me-1"
+                                              th:class="${nv.trangThai == 1 ? 'bg-label-success badge me-1' : 'badge me-1 bg-label-danger'}">
+                                            [[${nv.trangThai == 1 ? 'Active' : 'Inactive'}]]
+                                        </span>
+                            </td>
+
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" th:href="@{/nhan-vien/view-update/{id}(id=${nv.id})}">
+                                            <i class="bx bx-edit-alt me-1"></i> Edit
+                                        </a>
+                                        <a class="dropdown-item" 
+                                           th:href="@{/nhan-vien/delete/{id}(id=${nv.id})}"
+                                        ><i class="bx bx-trash me-1"></i> Delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+    <script>
+        var successMessage = document.getElementById('successMessage');
+        if (successMessage) {
+            successMessage.classList.add('slideInRight');
+            setTimeout(function() {
+                successMessage.classList.remove('slideInRight');
+                successMessage.classList.add('slideOutRight');
+                setTimeout(function() {
+                    successMessage.style.display = 'none';
+                }, 1000);
+            }, 4000);
+        }
+    </script>
+</article>
+</body>
+
+</html>
