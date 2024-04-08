@@ -1,2 +1,3 @@
-package com.example.demo.Controller;public class DiaChi {
+package com.example.demo.Controller;
+public class DiaChi {
 }

@@ -1,26 +1,28 @@
 package com.example.demo.Entitys;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.math.BigInteger;
 
 @Entity
 @Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "KhahHang")
+@Table(name = "KhachHang")
 public class KhachHang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Integer id;
+    private BigInteger id;
 
     @Column(name = "TenKhachHang")
     private  String tenKhachHang;
 
     @Column(name = "SDT")
-    private Integer sdt;
+    private String sdt;
 
     @Column(name = "Email")
     private String email;
@@ -33,4 +35,8 @@ public class KhachHang {
 
     @Column(name = "TrangThai")
     private Integer trangThai;
+
+    public KhachHang(String sdt) {
+        this.sdt = sdt;
+    }
 }
