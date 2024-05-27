@@ -45,7 +45,7 @@
   --bs-body-font-size: 0.9375rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.53;
-  --bs-body-color: #000000;
+  --bs-body-color: #697a8d;
   --bs-body-bg: #f5f5f9;
 }
 
@@ -94,7 +94,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
   margin-bottom: 1rem;
   font-weight: 500;
   line-height: 1.1;
-  color: #000000;
+  color: #566a7f;
 }
 
 h1, .h1 {
@@ -272,7 +272,7 @@ kbd {
   padding: 0.2rem 0.4rem;
   font-size: 85%;
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(67, 89, 113, 0.9);
   border-radius: 0.25rem;
 }
 kbd kbd {
@@ -298,7 +298,7 @@ table {
 caption {
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
-  color: #262525;
+  color: #a1acb8;
   text-align: left;
 }
 
@@ -578,7 +578,7 @@ progress {
   margin-top: -1rem;
   margin-bottom: 1rem;
   font-size: 85%;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(67, 89, 113, 0.6);
 }
 .blockquote-footer::before {
   content: "— ";
@@ -1945,15 +1945,15 @@ progress {
 .table {
   --bs-table-bg: transparent;
   --bs-table-accent-bg: transparent;
-  --bs-table-striped-color: #141515;
+  --bs-table-striped-color: #697a8d;
   --bs-table-striped-bg: #f9fafb;
-  --bs-table-active-color: #090909;
+  --bs-table-active-color: #697a8d;
   --bs-table-active-bg: rgba(67, 89, 113, 0.1);
   --bs-table-hover-color: #697a8d;
   --bs-table-hover-bg: rgba(67, 89, 113, 0.06);
   width: 100%;
   margin-bottom: 1rem;
-  color: #141515;
+  color: #697a8d;
   vertical-align: middle;
   border-color: #d9dee3;
 }
@@ -2186,7 +2186,7 @@ progress {
   color: #697a8d;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid #202225;
+  border: 1px solid #d9dee3;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -2708,7 +2708,7 @@ textarea.form-control-lg {
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.53;
-  color: #0c0c0c;
+  color: #697a8d;
   text-align: center;
   white-space: nowrap;
   background-color: #fff;
@@ -6228,7 +6228,7 @@ a.invert-bg-dark:hover, a.invert-bg-dark:focus {
   letter-spacing: 1px;
 }
 .table:not(.table-dark) th {
-  color: #000000;
+  color: #566a7f;
 }
 
 .table-border-bottom-0 tr:last-child td,
